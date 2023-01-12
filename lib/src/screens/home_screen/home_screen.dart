@@ -22,7 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  /// Each time to start a speech recognition session
   void _startListening() async {
     if (_speechEnabled) {
       await _speechToText.listen(onResult: _onSpeechResult);
@@ -33,17 +32,11 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  /// Manually stop the active speech recognition session
-  /// Note that there are also timeouts that each platform enforces
-  /// and the SpeechToText plugin supports setting timeouts on the
-  /// listen method.
   void _stopListening() async {
     await _speechToText.stop();
     setState(() {});
   }
 
-  /// This is the callback that the SpeechToText plugin calls when
-  /// the platform returns recognized words.
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _controller.text = result.recognizedWords;
@@ -108,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 5,
                 ),
                 ElevatedButton(
-                    onPressed: () => {},
+                    onPressed: (() => Navigator.pushNamed(context, 'feed')),
                     child: Text(
                       'Search',
                       style: TextStyle(fontSize: 18),
