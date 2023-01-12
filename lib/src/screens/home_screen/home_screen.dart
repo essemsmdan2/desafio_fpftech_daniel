@@ -8,14 +8,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late TextEditingController _controller;
+  Widget _textField() {
+    return TextField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        hintText: 'Digite a Subreddit',
+      ),
+      controller: _controller,
+    );
+  }
+
+  @override
+  void initState() {
+    _controller = TextEditingController(text: 'FlutterDev');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
         title: const Text('Desafio - Feed Tecnologia'),
@@ -25,6 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             FractionallySizedBox(
               widthFactor: 0.7,
               child: Image.asset(
@@ -32,6 +46,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 fit: BoxFit.cover,
               ),
             ),
+            const SizedBox(
+              height: 15,
+            ),
+            _textField(),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+                onPressed: () => {},
+                child: Text(
+                  'Search',
+                  style: TextStyle(fontSize: 18),
+                ))
           ],
         ),
       ),
