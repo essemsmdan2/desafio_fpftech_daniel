@@ -18,10 +18,22 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        title: Text('Desafio - Feed Tecnologia'),
+        title: const Text('Desafio - Feed Tecnologia'),
       ),
-      body: Column(
-        children: [Text('test'), Image.asset('images/logo.png')],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            FractionallySizedBox(
+              widthFactor: 0.7,
+              child: Image.asset(
+                'images/logo.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
