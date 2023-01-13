@@ -1,6 +1,5 @@
-import 'dart:convert';
-
-import 'package:desafio_fpftech_daniel/src/screens/feed_screen/post_model.dart';
+import 'package:desafio_fpftech_daniel/src/screens/comment_screen/comment_screen.dart';
+import 'package:desafio_fpftech_daniel/model/post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -41,7 +40,15 @@ class _FeedScreenState extends State<FeedScreen> {
                   return Card(
                     child: ListTile(
                       style: ListTileStyle.drawer,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CommentScreen(
+                                    post: post,
+                                  )),
+                        );
+                      },
                       title: Text(
                         post.title,
                         style: TextStyle(fontSize: 16),
@@ -60,7 +67,7 @@ class _FeedScreenState extends State<FeedScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.comment),
-                          Text('${post.num_comments}'),
+                          Text('${post.numComments}'),
                         ],
                       ),
                       subtitle: _loadPreview(post),

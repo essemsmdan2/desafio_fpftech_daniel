@@ -22,21 +22,23 @@ class Posts {
   final String title;
   final String author;
   final String score;
-  final int num_comments;
+  final int numComments;
   final String thumbnail;
-
+  final String permalink;
   Posts(
       {required this.title,
       required this.author,
-      required this.num_comments,
+      required this.numComments,
       required this.thumbnail,
+      required this.permalink,
       required this.score});
 
   factory Posts.fromJson(Map<String, dynamic> json) {
     return Posts(
         title: json['title'],
         thumbnail: json['thumbnail'],
-        num_comments: json['num_comments'],
+        numComments: json['num_comments'],
+        permalink: json['permalink'],
         author: json['author'],
         score: json['score'].toString());
   }
