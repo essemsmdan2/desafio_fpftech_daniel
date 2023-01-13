@@ -27,23 +27,52 @@ class _FeedScreenState extends State<FeedScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<Posts> posts = snapshot.data as List<Posts>;
-            return ListView.builder(
-              itemCount: posts.length,
-              itemBuilder: (BuildContext context, int index) {
-                Posts post = posts[index];
-                return ListTile(
-                  onTap: () {},
-                  title: Text(post.title),
-                  leading: Text(post.score),
-                  trailing: Text('${post.num_comments}'),
-                  subtitle: _loadPreview(post),
-                );
+            return RefreshIndicator(
+              onRefresh: () async {
+                final snapshot = await fetchPosts(http.Client(), widget.subreddit);
+                setState(() {
+                  posts = snapshot;
+                });
               },
+              child: ListView.builder(
+                itemCount: posts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Posts post = posts[index];
+                  return Card(
+                    child: ListTile(
+                      style: ListTileStyle.drawer,
+                      onTap: () {},
+                      title: Text(
+                        post.title,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      leading: FittedBox(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.file_upload_rounded),
+                            Text(post.score),
+                            Icon(Icons.download),
+                          ],
+                        ),
+                      ),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.comment),
+                          Text('${post.num_comments}'),
+                        ],
+                      ),
+                      subtitle: _loadPreview(post),
+                    ),
+                  );
+                },
+              ),
             );
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           }
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         },
       ),
     );
