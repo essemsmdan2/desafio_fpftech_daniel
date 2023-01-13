@@ -21,7 +21,9 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'home': (context) => const MyHomePage(),
-        'feed': (context) => const FeedScreen(),
+        'feed': (context) => FeedScreen(
+              subreddit: '',
+            ),
       },
     );
   }

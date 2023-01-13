@@ -1,3 +1,4 @@
+import 'package:desafio_fpftech_daniel/src/screens/feed_screen/feed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -101,7 +102,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 5,
                 ),
                 ElevatedButton(
-                    onPressed: (() => Navigator.pushNamed(context, 'feed')),
+                    onPressed: (() => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FeedScreen(
+                                    subreddit: _controller.text,
+                                  )),
+                        )),
                     child: Text(
                       'Search',
                       style: TextStyle(fontSize: 18),
