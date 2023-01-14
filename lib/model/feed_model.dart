@@ -7,9 +7,16 @@ import 'package:http/http.dart' as http;
 String url = 'https://www.reddit.com';
 
 Future<List<Feed>> fetchFeed(http.Client client, topic) async {
-  final response = await client.get(Uri.parse("$url/r/$topic/hot.json"));
-
-  return compute(parseFeeds, response.body);
+  try {
+    final response = await client.get(Uri.parse("$url/r/$topic/hot.json"));
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load data');
+    }
+    return compute(parseFeeds, response.body);
+  } on Exception catch (e) {
+    print(e);
+  }
+  return [];
 }
 
 List<Feed> parseFeeds(String responseBody) {

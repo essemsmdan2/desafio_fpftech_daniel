@@ -1,4 +1,5 @@
-import 'package:desafio_fpftech_daniel/src/screens/comment_screen/comment_screen.dart';
+import 'package:desafio_fpftech_daniel/core/config/constants.dart';
+import 'package:desafio_fpftech_daniel/src/screens/post_screen/post_screen.dart';
 import 'package:desafio_fpftech_daniel/model/feed_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -26,58 +27,80 @@ class _FeedScreenState extends State<FeedScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<Feed> posts = snapshot.data as List<Feed>;
-            return RefreshIndicator(
-              onRefresh: () async {
-                final snapshot = await fetchFeed(http.Client(), widget.subreddit);
-                setState(() {
-                  posts = snapshot;
-                });
-              },
-              child: ListView.builder(
-                itemCount: posts.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Feed post = posts[index];
-                  return Card(
-                    child: ListTile(
-                      style: ListTileStyle.drawer,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CommentScreen(
-                                    post: post,
-                                  )),
-                        );
-                      },
-                      title: Text(
-                        post.title,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      leading: FittedBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+            if (posts.isNotEmpty) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  final snapshot = await fetchFeed(http.Client(), widget.subreddit);
+                  setState(() {
+                    posts = snapshot;
+                  });
+                },
+                child: ListView.builder(
+                  itemCount: posts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Feed post = posts[index];
+                    return Card(
+                      child: ListTile(
+                        style: ListTileStyle.drawer,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CommentScreen(
+                                      post: post,
+                                    )),
+                          );
+                        },
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Icon(Icons.file_upload_rounded),
-                            Text(post.score),
-                            Icon(Icons.download),
+                            Text(
+                              "Posted by u/${post.author}",
+                              style: kSubTitleTextStyle.copyWith(fontSize: 13),
+                            ),
+                            Text(
+                              post.title,
+                              style: TextStyle(fontSize: 16),
+                            ),
                           ],
                         ),
+                        leading: FittedBox(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.file_upload_rounded),
+                              Text(post.score),
+                              Icon(Icons.download),
+                            ],
+                          ),
+                        ),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.comment),
+                            Text('${post.numComments}'),
+                          ],
+                        ),
+                        subtitle: _loadPreview(post),
                       ),
-                      trailing: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.comment),
-                          Text('${post.numComments}'),
-                        ],
-                      ),
-                      subtitle: _loadPreview(post),
-                    ),
-                  );
-                },
-              ),
-            );
+                    );
+                  },
+                ),
+              );
+            } else {
+              return Center(
+                  child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  'Sorry couldn\'t find any result',
+                  style: kPrimaryTextStyle,
+                  textAlign: TextAlign.center,
+                ),
+              ));
+            }
           } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
+            print(snapshot);
+            return Center(child: Text(snapshot.error.toString()));
           }
           return Center(child: CircularProgressIndicator());
         },

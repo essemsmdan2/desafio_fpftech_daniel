@@ -23,11 +23,21 @@ class Posts {
   final String thumbnail;
   final String title;
   final String selftext;
+  final String score;
+  final String numComments;
   Posts(
-      {required this.thumbnail, required this.selftext, required this.author, required this.url, required this.title});
+      {required this.thumbnail,
+      required this.score,
+      required this.numComments,
+      required this.selftext,
+      required this.author,
+      required this.url,
+      required this.title});
 
   factory Posts.fromJson(Map<String, dynamic> json) {
     return Posts(
+      score: json['score'].toString(),
+      numComments: json['num_comments'].toString(),
       thumbnail: json['thumbnail'] ?? "",
       title: json['title'],
       selftext: json['selftext'] ?? "",
