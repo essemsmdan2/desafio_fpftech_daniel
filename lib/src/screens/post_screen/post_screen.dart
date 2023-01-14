@@ -165,7 +165,37 @@ Widget listItemPost(Posts item, BuildContext context) {
         item.selftext,
         style: kSubTitleTextStyle.copyWith(fontSize: 18),
       ),
-      _imageOrVideo(context, item.url, item.thumbnail)
+      SizedBox(
+        height: 10,
+      ),
+      _imageOrVideo(context, item.url, item.thumbnail),
+      SizedBox(
+        height: 10,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.file_upload_rounded),
+              Text(item.score),
+              Icon(Icons.download),
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Row(
+            children: [
+              Icon(Icons.comment),
+              SizedBox(
+                width: 5,
+              ),
+              Text(item.numComments),
+            ],
+          )
+        ],
+      )
     ],
   );
 }
