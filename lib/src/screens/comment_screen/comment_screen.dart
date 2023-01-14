@@ -141,14 +141,19 @@ class _ListItemPostsState extends State<ListItemPosts> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 40, right: 30, top: 20, bottom: 20),
-      child: listItemPost(items),
+      child: listItemPost(items, context),
     );
   }
 }
 
-Widget listItemPost(Posts item) {
+Widget listItemPost(Posts item, BuildContext context) {
   return Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
+      Text(
+        'Posted by u/${item.author}',
+        style: kSubTitleTextStyle,
+      ),
       Text(
         item.title,
         style: kPrimaryTextStyle.copyWith(fontSize: 22),
@@ -160,15 +165,16 @@ Widget listItemPost(Posts item) {
         item.selftext,
         style: kSubTitleTextStyle.copyWith(fontSize: 18),
       ),
-      _imageOrVideo(item.url, item.thumbnail)
+      _imageOrVideo(context, item.url, item.thumbnail)
     ],
   );
 }
 
 Widget _imageOrVideo(BuildContext context, String url, String thumnail) {
   Widget result = SizedBox();
+
   if (url.isNotEmpty && url.endsWith('.jpg')) {
-    return result = Image.network(url);
+    return result = Card(child: Image.network(url));
   } else {
     return result = GestureDetector(
       onTap: () async {
@@ -183,10 +189,14 @@ Widget _imageOrVideo(BuildContext context, String url, String thumnail) {
           Text('Click here to access the content'),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            child: Image.network(
-              thumnail,
-              fit: BoxFit.fitWidth,
-            ),
+            child: thumnail.endsWith('.jpg')
+                ? Card(
+                    child: Image.network(
+                      thumnail,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  )
+                : SizedBox(),
           )
         ],
       ),
@@ -210,7 +220,6 @@ class ListItemComment extends StatelessWidget {
               return Column(
                 children: <Widget>[
                   listItemComment(items[position]),
-                  Divider(height: 5.0),
                 ],
               );
             }));
@@ -218,8 +227,28 @@ class ListItemComment extends StatelessWidget {
 }
 
 Widget listItemComment(Comments items) {
-  return Text(
-    items.author,
-    style: kPrimaryTextStyle,
+  return Card(
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            items.author,
+            style: kPrimaryTextStyle,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            items.body,
+            style: kSubTitleTextStyle.copyWith(fontSize: 18),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+        ],
+      ),
+    ),
   );
 }
