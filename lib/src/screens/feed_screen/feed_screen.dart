@@ -89,7 +89,7 @@ class _FeedScreenState extends State<FeedScreen> {
     final thumbnail = post.thumbnail;
     String fileUrl = "file:///default";
     Uri uri = Uri.parse(fileUrl);
-    if (thumbnail != null && thumbnail != 'self' && thumbnail != uri && thumbnail != "default") {
+    if (thumbnail.endsWith('.jpg')) {
       return Image.network(
         thumbnail,
         width: MediaQuery.of(context).size.width,
