@@ -15,7 +15,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
-  String _lastWords = '';
 
   void _initSpeech() async {
     _speechEnabled = await _speechToText.initialize();

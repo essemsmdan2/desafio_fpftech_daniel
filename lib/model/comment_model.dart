@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:desafio_fpftech_daniel/model/feed_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 String url = 'https://www.reddit.com';
 
-Future<List<Comments>> fetchComments(http.Client client, post) async {
-  final response = await client.get(Uri.parse("$url${post['permalink']}.json"));
+Future<List<Comments>> fetchComments(http.Client client, String permalink) async {
+  final response = await client.get(Uri.parse("$url${permalink}.json"));
   // print("$url${post['permalink']}");
   return compute(parseComments, response.body);
 }

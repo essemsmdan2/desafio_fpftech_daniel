@@ -1,5 +1,5 @@
 import 'package:desafio_fpftech_daniel/src/screens/comment_screen/comment_screen.dart';
-import 'package:desafio_fpftech_daniel/model/post_model.dart';
+import 'package:desafio_fpftech_daniel/model/feed_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,14 +21,14 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.subreddit)),
-      body: FutureBuilder<List<Posts>>(
-        future: fetchPosts(http.Client(), widget.subreddit),
+      body: FutureBuilder<List<Feed>>(
+        future: fetchFeed(http.Client(), widget.subreddit),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<Posts> posts = snapshot.data as List<Posts>;
+            List<Feed> posts = snapshot.data as List<Feed>;
             return RefreshIndicator(
               onRefresh: () async {
-                final snapshot = await fetchPosts(http.Client(), widget.subreddit);
+                final snapshot = await fetchFeed(http.Client(), widget.subreddit);
                 setState(() {
                   posts = snapshot;
                 });
@@ -36,7 +36,7 @@ class _FeedScreenState extends State<FeedScreen> {
               child: ListView.builder(
                 itemCount: posts.length,
                 itemBuilder: (BuildContext context, int index) {
-                  Posts post = posts[index];
+                  Feed post = posts[index];
                   return Card(
                     child: ListTile(
                       style: ListTileStyle.drawer,
@@ -85,7 +85,7 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 
-  Widget _loadPreview(Posts post) {
+  Widget _loadPreview(Feed post) {
     final thumbnail = post.thumbnail;
     String fileUrl = "file:///default";
     Uri uri = Uri.parse(fileUrl);
