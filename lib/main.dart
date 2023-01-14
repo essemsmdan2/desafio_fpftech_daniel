@@ -1,3 +1,4 @@
+import 'package:desafio_fpftech_daniel/src/screens/feed_screen/feed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:desafio_fpftech_daniel/src/screens/home_screen/home_screen.dart';
 
@@ -17,7 +18,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      initialRoute: 'home',
+      routes: {
+        'home': (context) => const MyHomePage(),
+        'feed': (context) => FeedScreen(
+              subreddit: '',
+            ),
+      },
     );
   }
 }
