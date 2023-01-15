@@ -1,8 +1,7 @@
 import 'package:desafio_fpftech_daniel/src/screens/feed_screen/feed_screen.dart';
+import 'package:desafio_fpftech_daniel/src/screens/home_screen/home_controller.dart';
 import 'package:desafio_fpftech_daniel/src/screens/home_screen/widget/qr_code_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -12,53 +11,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late TextEditingController _controller;
-
-  SpeechToText _speechToText = SpeechToText();
-  bool _speechEnabled = false;
-
-  void _initSpeech() async {
-    _speechEnabled = await _speechToText.initialize();
-    print(_speechEnabled);
-    setState(() {});
-  }
-
-  void _startListening() async {
-    if (_speechEnabled) {
-      await _speechToText.listen(onResult: _onSpeechResult);
-    } else {
-      print('não inicializado');
-    }
-
-    setState(() {});
-  }
-
-  void _stopListening() async {
-    await _speechToText.stop();
-    setState(() {});
-  }
-
-  void _onSpeechResult(SpeechRecognitionResult result) {
-    setState(() {
-      _controller.text = result.recognizedWords;
-    });
-  }
-
-  Widget _textField() {
-    return TextField(
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(),
-        hintText: 'Digite a Subreddit',
-      ),
-      controller: _controller,
-    );
-  }
+  late HomePageController _controller;
 
   @override
   void initState() {
-    _initSpeech();
+    _controller = HomePageController();
+    _controller.initSpeech();
+    _controller.textController = TextEditingController(text: 'FlutterDev');
     super.initState();
-    _controller = TextEditingController(text: 'FlutterDev');
   }
 
   @override
@@ -87,12 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(
                   height: 15,
                 ),
-                _textField(),
+                _textField(_controller.textController),
                 const SizedBox(
                   height: 10,
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  _iconHandler(icon: Icons.mic, function: _startListening),
+                  _iconHandler(icon: Icons.mic, function: _controller.startListening),
                   SizedBox(
                     width: 15,
                   ),
@@ -102,12 +62,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 5,
                 ),
                 ElevatedButton(
-                    onPressed: () => _controller.text.isNotEmpty
+                    onPressed: () => _controller.textController.text.isNotEmpty
                         ? Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => FeedScreen(
-                                      subreddit: _controller.text.trim(),
+                                      subreddit: _controller.textController.text.trim(),
                                     )),
                           )
                         : () {},
@@ -137,4 +97,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+Widget _textField(controller) {
+  return TextField(
+    decoration: const InputDecoration(
+      border: OutlineInputBorder(),
+      hintText: 'Digite a Subreddit',
+    ),
+    controller: controller,
+  );
 }

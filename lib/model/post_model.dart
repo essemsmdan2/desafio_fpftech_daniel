@@ -39,9 +39,9 @@ class Posts {
       score: json['score'].toString(),
       numComments: json['num_comments'].toString(),
       thumbnail: json['thumbnail'] ?? "",
-      title: json['title'],
+      title: json['title'] ?? "",
       selftext: json['selftext'] ?? "",
-      author: json['author'],
+      author: json['author'] ?? "",
       url: json['url_overridden_by_dest'] ?? "",
     );
   }

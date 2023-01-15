@@ -30,8 +30,8 @@ class Comments {
   });
   factory Comments.fromJson(Map<String, dynamic> json) {
     return Comments(
-      body: json['body'],
-      author: json['author'],
+      body: json['body'] ?? "",
+      author: json['author'] ?? "",
       score: json['score'].toString(),
     );
   }

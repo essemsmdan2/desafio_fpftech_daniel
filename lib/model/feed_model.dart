@@ -29,7 +29,7 @@ class Feed {
   final String title;
   final String author;
   final String score;
-  final int numComments;
+  final String numComments;
   final String thumbnail;
   final String permalink;
   final String body;
@@ -46,7 +46,7 @@ class Feed {
     return Feed(
         title: json['title'],
         thumbnail: json['thumbnail'],
-        numComments: json['num_comments'],
+        numComments: json['num_comments'].toString(),
         permalink: json['permalink'],
         body: json['selftext'],
         author: json['author'],
