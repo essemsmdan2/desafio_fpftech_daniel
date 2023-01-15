@@ -1,4 +1,5 @@
 import 'package:desafio_fpftech_daniel/src/screens/feed_screen/feed_screen.dart';
+import 'package:desafio_fpftech_daniel/src/screens/home_screen/widget/qr_code_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -95,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(
                     width: 15,
                   ),
-                  _iconHandler(icon: Icons.qr_code, function: () => {}),
+                  QrCodeButton()
                 ]),
                 const SizedBox(
                   height: 5,
@@ -105,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => FeedScreen(
-                                    subreddit: _controller.text,
+                                    subreddit: _controller.text.trim(),
                                   )),
                         )),
                     child: Text(
