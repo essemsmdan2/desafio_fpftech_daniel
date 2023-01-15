@@ -81,7 +81,7 @@ class _FeedScreenState extends State<FeedScreen> {
                             Text('${post.numComments}'),
                           ],
                         ),
-                        subtitle: _loadPreview(post),
+                        subtitle: _previewHandler(post),
                       ),
                     );
                   },
@@ -108,7 +108,7 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 
-  Widget _loadPreview(Feed post) {
+  Widget _previewHandler(Feed post) {
     final thumbnail = post.thumbnail;
     String fileUrl = "file:///default";
     Uri uri = Uri.parse(fileUrl);
