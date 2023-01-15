@@ -102,15 +102,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 5,
                 ),
                 ElevatedButton(
-<<<<<<< Updated upstream
-                    onPressed: (() => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FeedScreen(
-                                    subreddit: _controller.text.trim(),
-                                  )),
-                        )),
-=======
                     onPressed: () => _controller.text.isNotEmpty
                         ? Navigator.push(
                             context,
@@ -120,7 +111,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                     )),
                           )
                         : () {},
->>>>>>> Stashed changes
                     child: Text(
                       'Search',
                       style: TextStyle(fontSize: 18),
