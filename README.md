@@ -11,6 +11,14 @@ Plataforma Android <br />
 - https://play.google.com/apps/internaltest/4701568241782608652 <br />
 - ao aceitar o pedido será informado um link para acesso da loja onde poderá baixar o app <br />
 
+Vídeo:
+https://youtube.com/shorts/kiA7T58dHg8?feature=share
+Imagens:
+![asda3333](https://user-images.githubusercontent.com/49322204/212661610-a3be7135-5835-4ef2-af7f-5ddad3eb1c89.jpg)
+
+
+
+
 -Detalhes do Desafio: <br />
 Resumo: Este desafio tem como objetivo a criação de um app em Flutter para a visualização simplificada dos
 posts mais recentes de algum determinado subreddit escolhido pelo usuário. <br /> <br />
