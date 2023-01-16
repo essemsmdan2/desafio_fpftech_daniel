@@ -1,14 +1,4 @@
 
-# Desafio  FpfTech
-
-Teste para Vaga Flutter Developer  
-
-## Instalação <br />
-
-Plataforma Android <br />
-- tester deverá informar o email para que seja adicionado a lista de testers (requisito do Google) <br />
-- logo após usar o link a baixo para aceitar o pedido de tester <br />
-- 
 # Desafio  
 
 Teste para Vaga Flutter Developer 
