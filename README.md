@@ -12,7 +12,7 @@ Plataforma Android <br />
 - ao aceitar o pedido será informado um link para acesso da loja onde poderá baixar o app <br />
 
 Vídeo:
-https://youtube.com/shorts/kiA7T58dHg8?feature=share
+https://youtube.com/shorts/kiA7T58dHg8?feature=share <br />
 Imagens:
 ![asda3333](https://user-images.githubusercontent.com/49322204/212661610-a3be7135-5835-4ef2-af7f-5ddad3eb1c89.jpg)
 
