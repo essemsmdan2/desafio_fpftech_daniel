@@ -14,10 +14,10 @@ class ListItemComment extends StatelessWidget {
             itemCount: items.length,
             primary: false,
             shrinkWrap: true,
-            itemBuilder: (BuildContext context, int position) {
+            itemBuilder: (BuildContext context, int index) {
               return Column(
                 children: <Widget>[
-                  listItemComment(items[position]),
+                  listItemComment(items[index]),
                 ],
               );
             }));
@@ -25,28 +25,63 @@ class ListItemComment extends StatelessWidget {
 }
 
 Widget listItemComment(Comments items) {
-  return Card(
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            items.author,
-            style: kPrimaryTextStyle,
+  if (items.replies != null && items.replies != '-1' && items.replies != "") {
+    return Column(
+      children: [
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  items.author,
+                  style: kPrimaryTextStyle,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  items.body,
+                  style: kSubTitleTextStyle.copyWith(fontSize: 18),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+              ],
+            ),
           ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            items.body,
-            style: kSubTitleTextStyle.copyWith(fontSize: 18),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-        ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: listItemComment(Comments.commentReply(items)),
+        )
+      ],
+    );
+  } else {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              items.author,
+              style: kPrimaryTextStyle,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              items.body,
+              style: kSubTitleTextStyle.copyWith(fontSize: 18),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
