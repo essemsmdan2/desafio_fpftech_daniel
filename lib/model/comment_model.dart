@@ -23,16 +23,22 @@ class Comments {
   final String body;
   final String author;
   final String score;
+  final dynamic replies;
+
   Comments({
+    required this.replies,
     required this.author,
     required this.body,
     required this.score,
   });
   factory Comments.fromJson(Map<String, dynamic> json) {
     return Comments(
+      replies: json['replies'],
       body: json['body'] ?? "",
       author: json['author'] ?? "",
       score: json['score'].toString(),
     );
   }
+
+  factory Comments.commentReply(Comments item) => Comments.fromJson(item.replies?['data']?['children']?[0]?['data']);
 }

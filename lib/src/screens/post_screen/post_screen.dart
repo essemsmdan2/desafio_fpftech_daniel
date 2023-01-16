@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:desafio_fpftech_daniel/core/config/constants.dart';
 import 'package:desafio_fpftech_daniel/model/comment_model.dart';
 import 'package:desafio_fpftech_daniel/model/feed_model.dart';
