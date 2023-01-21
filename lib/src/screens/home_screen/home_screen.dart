@@ -13,11 +13,51 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late HomePageController _controller;
 
+  final _formKey = GlobalKey<FormState>();
+  _pesquisa() {
+    if (_formKey.currentState!.validate()) {
+      print(_controller.textController.text.trim());
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => FeedScreen(
+                  subreddit: _controller.textController.text.trim(),
+                )),
+      );
+    }
+  }
+
+  Widget _textField() {
+    return Form(
+      key: _formKey,
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Digite um subreddit";
+          } else {
+            return null;
+          }
+        },
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          label: Text('Digite a Subreddit'),
+        ),
+        controller: _controller.textController,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.textController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     _controller = HomePageController();
     _controller.initSpeech();
-    _controller.textController = TextEditingController(text: 'FlutterDev');
+    _controller.textController = TextEditingController(text: 'vaso');
     super.initState();
   }
 
@@ -47,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(
                   height: 15,
                 ),
-                _textField(_controller.textController),
+                _textField(),
                 const SizedBox(
                   height: 10,
                 ),
@@ -62,15 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 5,
                 ),
                 ElevatedButton(
-                    onPressed: () => _controller.textController.text.isNotEmpty
-                        ? Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FeedScreen(
-                                      subreddit: _controller.textController.text.trim(),
-                                    )),
-                          )
-                        : () {},
+                    onPressed: _pesquisa,
                     child: Text(
                       'Search',
                       style: TextStyle(fontSize: 18),
@@ -97,14 +129,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
-
-Widget _textField(controller) {
-  return TextField(
-    decoration: const InputDecoration(
-      border: OutlineInputBorder(),
-      hintText: 'Digite a Subreddit',
-    ),
-    controller: controller,
-  );
 }

@@ -46,9 +46,11 @@ class _FeedScreenState extends State<FeedScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CommentScreen(
-                                      post: post,
-                                    )),
+                                builder: (context) => posts[index].numComments == ""
+                                    ? FeedScreen(subreddit: posts[index].url)
+                                    : CommentScreen(
+                                        post: post,
+                                      )),
                           );
                         },
                         title: Column(
@@ -65,22 +67,26 @@ class _FeedScreenState extends State<FeedScreen> {
                           ],
                         ),
                         leading: FittedBox(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.file_upload_rounded),
-                              Text(post.score),
-                              Icon(Icons.download),
-                            ],
-                          ),
+                          child: post.numComments!.isEmpty || post.numComments == null
+                              ? null
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.file_upload_rounded),
+                                    Text(post.score),
+                                    Icon(Icons.download),
+                                  ],
+                                ),
                         ),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.comment),
-                            Text('${post.numComments}'),
-                          ],
-                        ),
+                        trailing: post.numComments!.isEmpty || post.numComments == null
+                            ? null
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.comment),
+                                  Text('${post.numComments}'),
+                                ],
+                              ),
                         subtitle: _previewHandler(post),
                       ),
                     );
@@ -99,8 +105,8 @@ class _FeedScreenState extends State<FeedScreen> {
               ));
             }
           } else if (snapshot.hasError) {
-            print(snapshot);
-            return Center(child: Text(snapshot.error.toString()));
+            print(snapshot.error);
+            return Center(child: Text("Sorry couldn't find any result"));
           }
           return Center(child: CircularProgressIndicator());
         },

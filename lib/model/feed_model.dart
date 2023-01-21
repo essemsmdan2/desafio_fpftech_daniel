@@ -9,9 +9,11 @@ String url = 'https://www.reddit.com';
 Future<List<Feed>> fetchFeed(http.Client client, topic) async {
   try {
     final response = await client.get(Uri.parse("$url/r/$topic/hot.json"));
+
     if (response.statusCode != 200) {
       throw Exception('Failed to load data');
     }
+
     return compute(parseFeeds, response.body);
   } on Exception catch (e) {
     print(e);
@@ -29,9 +31,10 @@ class Feed {
   final String title;
   final String author;
   final String score;
-  final String numComments;
+  final String? numComments;
   final String thumbnail;
   final String permalink;
+  final String url;
   final String body;
   Feed(
       {required this.title,
@@ -40,16 +43,18 @@ class Feed {
       required this.numComments,
       required this.thumbnail,
       required this.permalink,
+      required this.url,
       required this.score});
 
   factory Feed.fromJson(Map<String, dynamic> json) {
     return Feed(
-        title: json['title'],
-        thumbnail: json['thumbnail'],
-        numComments: json['num_comments'].toString(),
-        permalink: json['permalink'],
-        body: json['selftext'],
-        author: json['author'],
+        title: json['title'] ?? "",
+        thumbnail: json['thumbnail'] ?? "",
+        numComments: json['num_comments'] == null ? "" : json['num_comments'].toString(),
+        permalink: json['permalink'] ?? "",
+        url: json["display_name"] ?? "",
+        body: json['selftext'] ?? "",
+        author: json['author'] ?? "",
         score: json['score'].toString());
   }
 }
